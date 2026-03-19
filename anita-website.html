@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0c0c;
+    --bg2: #111111;
+    --bg3: #161616;
+    --border: #1e1e1e;
+    --border2: #2a2a2a;
+    --text: #f0ede6;
+    --muted: #666;
+    --faint: #444;
+    --fainter: #2a2a2a;
+    --accent: #c8c0b0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 2.5rem;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  .nav-links a {
+    font-size: 12px;
+    color: var(--faint);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: lowercase;
+    transition: color 0.2s;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    padding: 0;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active {
+    color: var(--text);
+    border-bottom: 0.5px solid var(--text);
+    padding-bottom: 2px;
+  }
+
+  /* PAGES */
+  .page { display: none; animation: fadein 0.35s ease; }
+  .page.active { display: block; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SHARED */
+  .divider { height: 0.5px; background: var(--border); margin: 0 2.5rem; }
+
+  .section { padding: 2.5rem 2.5rem; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--faint);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  .footer {
+    padding: 1.5rem 2.5rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  .footer span {
+    font-size: 11px;
+    color: var(--fainter);
+    letter-spacing: 0.08em;
+  }
+  .footer .tagline { font-style: italic; }
+
+  /* HOME PAGE */
+  .hero {
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+  }
+  .hero-big {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(56px, 11vw, 100px);
+    line-height: 0.92;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 2.5rem;
+  }
+  .hero-big em {
+    font-style: italic;
+    color: var(--faint);
+  }
+  .hero-row {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+  .hero-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 340px;
+    flex: 1;
+    min-width: 220px;
+    font-weight: 300;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    border: 0.5px solid var(--border2);
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-weight: 300;
+  }
+
+  /* QUOTE */
+  .quote-block {
+    padding: 3rem 2.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .quote-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(18px, 3vw, 28px);
+    color: var(--muted);
+    line-height: 1.5;
+    font-style: italic;
+    max-width: 600px;
+  }
+  .quote-text strong {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* ABOUT */
+  .about-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+  .about-text p + p { margin-top: 1.2rem; }
+  .stat-col { display: flex; flex-direction: column; gap: 20px; }
+  .stat { border-top: 0.5px solid var(--border); padding-top: 14px; }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.12em;
+    margin-top: 4px;
+  }
+
+  /* PROJECTS PAGE */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .project-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.25s, transform 0.25s;
+    cursor: default;
+  }
+  .project-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+  .project-year {
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .project-chip {
+    display: inline-block;
+    font-size: 10px;
+    color: var(--faint);
+    border: 0.5px solid var(--border2);
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin-top: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  /* FILM PAGE */
+  .photo-strip {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .photo-strip-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 10px;
+  }
+  .photo-box {
+    background: var(--bg3);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    min-height: 200px;
+    border: 0.5px solid var(--border);
+    transition: border-color 0.2s;
+    cursor: default;
+  }
+  .photo-box:hover { border-color: var(--border2); }
+  .photo-box-tall { min-height: 280px; }
+  .photo-num {
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.12em;
+  }
+  .photo-caption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 300;
+  }
+  .film-note {
+    font-size: 12px;
+    color: var(--fainter);
+    margin-top: 1.5rem;
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+
+  /* CAT PAGE */
+  .cat-intro {
+    padding: 4rem 2.5rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .cat-eyebrow {
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .cat-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(44px, 8vw, 76px);
+    line-height: 0.92;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .cat-title em { font-style: italic; color: var(--faint); }
+  .cat-feature {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 14px;
+    margin-top: 2rem;
+  }
+  .cat-box {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .cat-box-big { min-height: 300px; }
+  .cat-box-label {
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cat-box-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+  }
+  .cat-box-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .cat-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .cat-fact {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+  }
+  .cat-fact-label {
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cat-fact-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--accent);
+  }
+  .cat-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-top: 2.5rem;
+    max-width: 540px;
+    font-weight: 300;
+  }
+
+  /* CONTACT PAGE */
+  .contact-section {
+    padding: 4rem 2.5rem 3rem;
+  }
+  .contact-big {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 7vw, 64px);
+    color: var(--text);
+    line-height: 1.05;
+    margin-bottom: 2.5rem;
+  }
+  .contact-big em { font-style: italic; color: var(--faint); }
+  .contact-links { display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; }
+  .contact-link {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--border2);
+    padding-bottom: 3px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s, border-color 0.2s;
+    font-weight: 300;
+  }
+  .contact-link:hover { color: var(--text); border-color: var(--muted); }
+
+  /* PAGE HEADER for inner pages */
+  .page-header {
+    padding: 3.5rem 2.5rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .page-header-eyebrow {
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .page-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 7vw, 72px);
+    color: var(--text);
+    line-height: 0.95;
+  }
+  .page-header-title em { font-style: italic; color: var(--faint); }
+
+  @media (max-width: 680px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .hero, .section, .quote-block, .contact-section, .cat-intro, .page-header { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .divider { margin: 0 1.2rem; }
+    .footer { padding: 1.2rem; }
+    .about-row { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .photo-strip, .photo-strip-2 { grid-template-columns: 1fr 1fr; }
+    .cat-feature { grid-template-columns: 1fr; }
+    .cat-facts { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Anita</div>
+  <div class="nav-links">
+    <a id="nav-home" class="active" onclick="showPage('home')">home</a>
+    <a id="nav-projects" onclick="showPage('projects')">projects</a>
+    <a id="nav-film" onclick="showPage('film')">film</a>
+    <a id="nav-cat" onclick="showPage('cat')">my cat</a>
+    <a id="nav-contact" onclick="showPage('contact')">contact</a>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-eyebrow">neuroscience · photography · builder — est. 2007</div>
+    <div class="hero-big">
+      Anita.<br>
+      <em>In progress.</em>
+    </div>
+    <div class="hero-row">
+      <div class="hero-desc">
+        科研人，骨子里的文青。用脑电和镜头记录世界，也折腾一些没用但有意思的东西。
+      </div>
+      <div class="hero-tags">
+        <span class="tag">EEG / LFP</span>
+        <span class="tag">documentary</span>
+        <span class="tag">builder</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    <div class="quote-text">
+      "做研究是<strong>问问题</strong>，拍照是<strong>留住答案之前的那一秒</strong>。"
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">about</div>
+    <div class="about-row">
+      <div class="about-text">
+        <p>还没上大学，但已经在中科院做脑科学研究了。喜欢从细节里找意义——不管是神经信号的毫秒级波动，还是街角某个普通人的表情。</p>
+        <p>做事认真但不死板，对世界保持好奇。纪录片、胶片、代码、实验数据，在我眼里是同一件事：试图搞懂这个世界是怎么运作的。</p>
+      </div>
+      <div class="stat-col">
+        <div class="stat">
+          <div class="stat-num">3 weeks</div>
+          <div class="stat-label">at Bao Lab · SIAT</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">还没拍完的照片</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1</div>
+          <div class="stat-label">只猫，无限个故事</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>© 2025 Anita</span>
+    <span class="tagline">still figuring it out.</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="page-projects" class="page">
+  <div class="page-header">
+    <div class="page-header-eyebrow">things i've built & researched</div>
+    <div class="page-header-title">Projects.<br><em>The real ones.</em></div>
+  </div>
+  <div class="section">
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-year">2024 — neuroscience</div>
+        <div class="project-title">LFP 听觉响应分析</div>
+        <div class="project-desc">VM / VF 小鼠听觉皮层对 pup call 的局部场电位响应研究，ERP分析与通道选择。</div>
+        <span class="project-chip">in progress</span>
+      </div>
+      <div class="project-card">
+        <div class="project-year">2023 — EEG</div>
+        <div class="project-title">ERP 信号处理</div>
+        <div class="project-desc">事件相关电位分析，从原始信号到统计结果的完整流程。</div>
+        <span class="project-chip">research</span>
+      </div>
+      <div class="project-card">
+        <div class="project-year">2022 — high school</div>
+        <!-- 替换成你的真实高中项目名 -->
+        <div class="project-title">高中项目 A</div>
+        <div class="project-desc">在这里写一段项目介绍，替换成你真实做过的东西。</div>
+        <span class="project-chip">featured</span>
+      </div>
+      <div class="project-card">
+        <div class="project-year">2022 — high school</div>
+        <!-- 替换成你的真实高中项目名 -->
+        <div class="project-title">高中项目 B</div>
+        <div class="project-desc">另一个你引以为傲的项目，放这里很有分量。</div>
+        <span class="project-chip">featured</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span>© 2025 Anita</span>
+    <span class="tagline">still figuring it out.</span>
+  </div>
+</div>
+
+<!-- FILM -->
+<div id="page-film" class="page">
+  <div class="page-header">
+    <div class="page-header-eyebrow">film & photography</div>
+    <div class="page-header-title">Seeing things.<br><em>Keeping them.</em></div>
+  </div>
+  <div class="section">
+    <div class="photo-strip">
+      <!-- 把 background 换成你的照片 URL，例如 background: url('your-photo.jpg') center/cover -->
+      <div class="photo-box photo-box-tall">
+        <span class="photo-num">2024</span>
+        <span class="photo-caption">城市里的边角料</span>
+      </div>
+      <div class="photo-box">
+        <span class="photo-num">2023</span>
+        <span class="photo-caption">早上六点</span>
+      </div>
+      <div class="photo-box">
+        <span class="photo-num">2024</span>
+        <span class="photo-caption">实验室的光</span>
+      </div>
+    </div>
+    <div class="photo-strip-2" style="margin-top: 10px;">
+      <div class="photo-box">
+        <span class="photo-num">2023</span>
+        <span class="photo-caption">替换成你的照片标题</span>
+      </div>
+      <div class="photo-box">
+        <span class="photo-num">2024</span>
+        <span class="photo-caption">替换成你的照片标题</span>
+      </div>
+      <div class="photo-box photo-box-tall">
+        <span class="photo-num">2024</span>
+        <span class="photo-caption">替换成你的照片标题</span>
+      </div>
+    </div>
+    <p class="film-note">* 照片背景替换方法：找到对应的 .photo-box，加上 style="background: url('图片路径') center/cover no-repeat;"</p>
+  </div>
+  <div class="footer">
+    <span>© 2025 Anita</span>
+    <span class="tagline">still figuring it out.</span>
+  </div>
+</div>
+
+<!-- CAT -->
+<div id="page-cat" class="page">
+  <div class="cat-intro">
+    <div class="cat-eyebrow">my cat</div>
+    <!-- 替换猫咪名字 -->
+    <div class="cat-title">猫猫的名字<br><em>a whole page, deserved.</em></div>
+    <div class="cat-feature">
+      <div class="cat-box cat-box-big">
+        <!-- 加猫咪照片：style="background: url('cat.jpg') center/cover no-repeat;" -->
+        <div class="cat-box-label">photo · coming soon</div>
+        <!-- 替换猫咪名字 -->
+        <div class="cat-box-val">猫猫的名字</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="cat-box" style="min-height: 140px; justify-content: center;">
+          <div class="cat-box-label">personality</div>
+          <!-- 替换性格描述 -->
+          <div class="cat-box-val" style="font-size: 17px;">替换成ta的性格</div>
+          <div class="cat-box-sub">一两句话描述</div>
+        </div>
+        <div class="cat-box" style="min-height: 140px; justify-content: center;">
+          <div class="cat-box-label">specialty</div>
+          <!-- 替换特长 -->
+          <div class="cat-box-val" style="font-size: 17px;">最拿手的技能</div>
+        </div>
+      </div>
+    </div>
+    <div class="cat-facts">
+      <!-- 替换所有 cat-fact-val 的内容 -->
+      <div class="cat-fact">
+        <div class="cat-fact-label">breed</div>
+        <div class="cat-fact-val">品种</div>
+      </div>
+      <div class="cat-fact">
+        <div class="cat-fact-label">age</div>
+        <div class="cat-fact-val">几岁</div>
+      </div>
+      <div class="cat-fact">
+        <div class="cat-fact-label">favorite spot</div>
+        <div class="cat-fact-val">最爱的地方</div>
+      </div>
+      <div class="cat-fact">
+        <div class="cat-fact-label">known for</div>
+        <div class="cat-fact-val">出名的原因</div>
+      </div>
+    </div>
+    <!-- 替换猫咪介绍 -->
+    <div class="cat-desc">
+      这里写一段关于你家猫的介绍，什么都行——ta第一次来家里的样子，最喜欢做的蠢事，或者那种只有你们才懂的默契。
+    </div>
+  </div>
+  <div class="footer">
+    <span>© 2025 Anita</span>
+    <span class="tagline">still figuring it out.</span>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div class="contact-section">
+    <div class="contact-big">
+      let's talk.<br>
+      <em>or just say hi.</em>
+    </div>
+    <div class="contact-links">
+      <!-- 替换 href 为你的真实链接 -->
+      <a class="contact-link" href="mailto:your@email.com">email</a>
+      <a class="contact-link" href="https://github.com/" target="_blank">github</a>
+      <a class="contact-link" href="https://instagram.com/" target="_blank">instagram</a>
+      <a class="contact-link" href="#">wechat</a>
+    </div>
+  </div>
+  <div class="footer">
+    <span>© 2025 Anita</span>
+    <span class="tagline">still figuring it out.</span>
+  </div>
+</div>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
