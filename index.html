@@ -746,6 +746,78 @@
 </div>
 
 <script>
+  // Hero canvas animation
+  (function() {
+    const container = document.getElementById('hero-canvas');
+    if (!container) return;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '100%');
+    svg.style.cssText = 'position:absolute;top:0;left:0;';
+    container.appendChild(svg);
+
+    const W = 600, H = 400;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+    const lines = [];
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      const angle = (i / count) * Math.PI * 2;
+      const r = 120 + Math.random() * 60;
+      line.setAttribute('x1', W * 0.62);
+      line.setAttribute('y1', H * 0.5);
+      line.setAttribute('x2', W * 0.62 + Math.cos(angle) * r);
+      line.setAttribute('y2', H * 0.5 + Math.sin(angle) * r);
+      line.setAttribute('stroke', '#2e4a6a');
+      line.setAttribute('stroke-width', '0.5');
+      svg.appendChild(line);
+      lines.push({ el: line, angle, r, speed: 0.0008 + Math.random() * 0.0006 });
+    }
+
+    const dots = [];
+    for (let i = 0; i < 6; i++) {
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      const angle = (i / 6) * Math.PI * 2;
+      const r = 80 + i * 28;
+      circle.setAttribute('cx', W * 0.62 + Math.cos(angle) * r);
+      circle.setAttribute('cy', H * 0.5 + Math.sin(angle) * r);
+      circle.setAttribute('r', '1.5');
+      circle.setAttribute('fill', '#3a5a7a');
+      svg.appendChild(circle);
+      dots.push({ el: circle, angle, r, speed: 0.001 + i * 0.0003 });
+    }
+
+    const ring1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    ring1.setAttribute('cx', W * 0.62); ring1.setAttribute('cy', H * 0.5);
+    ring1.setAttribute('r', '90'); ring1.setAttribute('fill', 'none');
+    ring1.setAttribute('stroke', '#1e2d42'); ring1.setAttribute('stroke-width', '0.5');
+    svg.appendChild(ring1);
+
+    const ring2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    ring2.setAttribute('cx', W * 0.62); ring2.setAttribute('cy', H * 0.5);
+    ring2.setAttribute('r', '160'); ring2.setAttribute('fill', 'none');
+    ring2.setAttribute('stroke', '#1e2d42'); ring2.setAttribute('stroke-width', '0.5');
+    svg.appendChild(ring2);
+
+    let t = 0;
+    function animate() {
+      t++;
+      lines.forEach(l => {
+        l.angle += l.speed;
+        l.el.setAttribute('x2', W * 0.62 + Math.cos(l.angle) * l.r);
+        l.el.setAttribute('y2', H * 0.5 + Math.sin(l.angle) * l.r);
+      });
+      dots.forEach(d => {
+        d.angle += d.speed;
+        d.el.setAttribute('cx', W * 0.62 + Math.cos(d.angle) * d.r);
+        d.el.setAttribute('cy', H * 0.5 + Math.sin(d.angle) * d.r);
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+
   function openModal(id) {
     document.getElementById('modal-overlay').style.display = 'block';
     const m = document.getElementById(id);
