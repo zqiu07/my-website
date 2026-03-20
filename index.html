@@ -257,16 +257,18 @@
     line-height: 1.7;
     font-weight: 300;
   }
-  .project-chip {
+.project-chip {
     display: inline-block;
     font-size: 10px;
-    color: var(--faint);
-    border: 0.5px solid var(--border2);
     padding: 3px 12px;
     border-radius: 12px;
     margin-top: 12px;
     letter-spacing: 0.08em;
+    border: none;
   }
+  .chip-ongoing { background: #1a3a2a; color: #4a9a6a; }
+  .chip-done { background: #1a2a3a; color: #5a8aaa; }
+  .chip-paused { background: #242424; color: #666; }
 
   /* FILM PAGE */
   .photo-strip {
