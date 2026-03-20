@@ -834,7 +834,7 @@
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
     document.getElementById('nav-' + name).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 </script>
 
