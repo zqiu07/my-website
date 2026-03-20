@@ -537,34 +537,83 @@
     <div class="page-header-title">Projects.<br><em>The real ones.</em></div>
   </div>
   <div class="section">
-    <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-year">2024 — neuroscience</div>
-        <div class="project-title">LFP 听觉响应分析</div>
-        <div class="project-desc">VM / VF 小鼠听觉皮层对 pup call 的局部场电位响应研究，ERP分析与通道选择。</div>
-        <span class="project-chip">in progress</span>
+<div class="projects-grid">
+      <div class="project-card" onclick="openModal('modal-eeg')">
+        <div class="project-year">2023 — EEG · research</div>
+        <div class="project-title">游戏成瘾的脑电信号研究</div>
+        <div class="project-desc">探索游戏设计如何通过神经机制影响玩家成瘾行为，EEG数据采集与分析。</div>
+        <span class="project-chip chip-done">已完成</span>
       </div>
-      <div class="project-card">
-        <div class="project-year">2023 — EEG</div>
-        <div class="project-title">ERP 信号处理</div>
-        <div class="project-desc">事件相关电位分析，从原始信号到统计结果的完整流程。</div>
-        <span class="project-chip">research</span>
-      </div>
-      <div class="project-card">
-        <div class="project-year">2022 — high school</div>
-        <!-- 替换成你的真实高中项目名 -->
-        <div class="project-title">高中项目 A</div>
-        <div class="project-desc">在这里写一段项目介绍，替换成你真实做过的东西。</div>
-        <span class="project-chip">featured</span>
-      </div>
-      <div class="project-card">
-        <div class="project-year">2022 — high school</div>
-        <!-- 替换成你的真实高中项目名 -->
-        <div class="project-title">高中项目 B</div>
-        <div class="project-desc">另一个你引以为傲的项目，放这里很有分量。</div>
-        <span class="project-chip">featured</span>
+      <div class="project-card" onclick="openModal('modal-burger')">
+        <div class="project-year">2024 — art · film</div>
+        <div class="project-title">MY BURGER</div>
+        <div class="project-desc">短片艺术项目，灵感来自韩炳哲《山寨》，探讨资本主义社会对欲望的塑造。</div>
+        <span class="project-chip chip-done">已完成</span>
       </div>
     </div>
+
+    <!-- Modal overlay -->
+    <div id="modal-overlay" onclick="closeModal()" style="display:none; position:fixed; inset:0; background:rgba(10,15,25,0.85); z-index:200;"></div>
+
+    <!-- EEG Modal -->
+    <div id="modal-eeg" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.96); z-index:201; width:min(680px,92vw); background:#111827; border:0.5px solid #2a3a52; border-radius:12px; padding:2.5rem; transition:transform 0.25s, opacity 0.25s; opacity:0;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem;">
+        <div>
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:8px;">2023 — EEG · research</div>
+          <div style="font-family:'DM Serif Display',serif; font-size:28px; color:#f0ede6; line-height:1.1;">游戏成瘾的脑电信号研究</div>
+        </div>
+        <button onclick="closeModal()" style="background:none; border:none; color:#555; font-size:20px; cursor:pointer; padding:4px 8px; line-height:1;">✕</button>
+      </div>
+      <div style="height:0.5px; background:#1e2a3a; margin-bottom:1.5rem;"></div>
+      <div style="font-size:14px; color:#8a9ab0; line-height:1.9; font-weight:300; margin-bottom:1.5rem;">
+        从2023年开始的个人研究项目，探索游戏设计机制如何通过神经层面影响玩家的成瘾行为。使用EEG采集玩家在不同游戏场景下的脑电数据，分析特定频段的活动变化与成瘾倾向之间的关联。
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:1.5rem;">
+        <div style="background:#0d1520; border:0.5px solid #1e2a3a; border-radius:6px; padding:0.9rem;">
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.1em; margin-bottom:4px;">METHOD</div>
+          <div style="font-size:13px; color:#c8c0b0;">EEG · ERP</div>
+        </div>
+        <div style="background:#0d1520; border:0.5px solid #1e2a3a; border-radius:6px; padding:0.9rem;">
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.1em; margin-bottom:4px;">OUTPUT</div>
+          <div style="font-size:13px; color:#c8c0b0;">论文 · PPT</div>
+        </div>
+        <div style="background:#0d1520; border:0.5px solid #1e2a3a; border-radius:6px; padding:0.9rem;">
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.1em; margin-bottom:4px;">STATUS</div>
+          <div style="font-size:13px; color:#4a9a6a;">已完成</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MY BURGER Modal -->
+    <div id="modal-burger" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.96); z-index:201; width:min(680px,92vw); background:#111827; border:0.5px solid #2a3a52; border-radius:12px; padding:2.5rem; transition:transform 0.25s, opacity 0.25s; opacity:0;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem;">
+        <div>
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:8px;">2024 — art · film · 4:20</div>
+          <div style="font-family:'DM Serif Display',serif; font-size:28px; color:#f0ede6; line-height:1.1;">MY BURGER</div>
+        </div>
+        <button onclick="closeModal()" style="background:none; border:none; color:#555; font-size:20px; cursor:pointer; padding:4px 8px; line-height:1;">✕</button>
+      </div>
+      <div style="height:0.5px; background:#1e2a3a; margin-bottom:1.5rem;"></div>
+      <div style="font-size:14px; color:#8a9ab0; line-height:1.9; font-weight:300; margin-bottom:1.5rem;">
+        与Joan Hu合作的短片艺术项目。灵感来自韩炳哲《山寨》，探讨资本主义社会与营销思维如何塑造我们对产品的欲望。影片分为两部分：用家中现有食材制作"汉堡"，以及用废弃材料搭建汉堡装置。
+      </div>
+      <div style="font-size:13px; color:#6a7a8a; line-height:1.8; font-weight:300; margin-bottom:1.5rem; font-style:italic; border-left:2px solid #1e2a3a; padding-left:1rem;">
+        "我们想强调个人可以定义审美价值，而不是只遵循主导和同质的标准。"
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+        <div style="background:#0d1520; border:0.5px solid #1e2a3a; border-radius:6px; padding:0.9rem;">
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.1em; margin-bottom:4px;">FORMAT</div>
+          <div style="font-size:13px; color:#c8c0b0;">16:9 · 1080p</div>
+        </div>
+        <div style="background:#0d1520; border:0.5px solid #1e2a3a; border-radius:6px; padding:0.9rem;">
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.1em; margin-bottom:4px;">COLLAB</div>
+          <div style="font-size:13px; color:#c8c0b0;">Joan Hu</div>
+        </div>
+        <div style="background:#0d1520; border:0.5px solid #1e2a3a; border-radius:6px; padding:0.9rem;">
+          <div style="font-size:10px; color:#4a6a8a; letter-spacing:0.1em; margin-bottom:4px;">STATUS</div>
+          <div style="font-size:13px; color:#4a9a6a;">已完成</div>
+        </div>
+      </div>
   </div>
   <div class="footer">
     <span>© 2026 Anita</span>
